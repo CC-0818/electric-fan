@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/electric fan.gif</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>fan.icns</file>
+    </qresource>
+</RCC>
