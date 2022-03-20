@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QResizeEvent>
 #include <QPushButton>
 #include <QLabel>
 #include <QMovie>
@@ -19,8 +18,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-private:
-    void resizeEvent(QResizeEvent* evt);
 
 private:
     Ui::MainWindow *ui;

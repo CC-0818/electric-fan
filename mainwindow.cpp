@@ -5,17 +5,16 @@
 #include <QLabel>
 #include <QMovie>
 #include <QByteArray>
-#include <QDebug>
-#include <QPixmap>
-#include <QThread>
 
-#define FANSWITCHYPOS 77
+#define FANSWITCHYPOS 90
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    resize(QSize(800, 480));
+    this->statusBar()->hide();
+    this->menuBar()->hide();
+    setFixedSize(QSize(900, 500));
     fanSwitch = new QPushButton(QString(tr("-")), this);
     fanSwitch->setCheckable(true);
     fanSwitch->setChecked(false);
@@ -28,10 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
                              "QPushButton:checked:hover{background-color: rgba(200, 0, 0, 0.6); color: white;}"
                              );
 
-    fanSwitch->move(rect().width()/2 - fanSwitch->width()/2, rect().height()*FANSWITCHYPOS/100 - fanSwitch->height()/2);
+    fanSwitch->move(rect().width()/2 - fanSwitch->width() - 40, rect().height()*FANSWITCHYPOS/100 - fanSwitch->height()/2);
     fanLabel = new QLabel(nullptr, this);
     slider = new QSlider(Qt::Horizontal, this);
-    slider->move(rect().width()/2 - slider->width()/2, rect().height()*(FANSWITCHYPOS+10)/100 - slider->height()/2);
+    slider->move(rect().width()/2, rect().height()*FANSWITCHYPOS/100 - slider->height()/2);
     fanMovie = new QMovie(":/res/electric fan.gif", QByteArray(), this);
     fanMovie->setCacheMode(QMovie::CacheAll);
     fanLabel->resize(rect().width(), rect().height());
@@ -66,17 +65,4 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::resizeEvent(QResizeEvent* evt)
-{
-    fanLabel->resize(evt->size());
-    fanMovie->setScaledSize(evt->size());
-    int curFreqNum = fanMovie->currentFrameNumber();
-    fanMovie->start();
-    fanMovie->jumpToFrame(curFreqNum);
-    if (fanSwitch->isChecked() == false) {
-        fanMovie->stop();
-    }
-    fanSwitch->move(rect().width()/2 - fanSwitch->width()/2, rect().height()*FANSWITCHYPOS/100 - fanSwitch->height()/2);
-    slider->move(rect().width()/2 - slider->width()/2, rect().height()*(FANSWITCHYPOS+10)/100 - slider->height()/2);
-}
 
